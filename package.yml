@@ -1,0 +1,58 @@
+name       : i2p
+version    : 0.9.33
+release    : 1
+source     :
+    - https://launchpad.net/i2p/trunk/0.9.33/+download/i2psource_0.9.33.tar.bz2 : 843345a85e021408e4cbeff8ee94b3842e9c4b5295bef374d5f2026872dae114
+license    : GPL-2.0-or-later
+component  : network.web
+summary    : A distributed anonymous network
+description: |
+    I2P is an anonymous network, exposing a simple layer that applications can use to anonymously and securely send messages to each other. The network itself is strictly message based (a la IP), but there is a library available to allow reliable streaming communication on top of it (a la TCP). All communication is end to end encrypted (in total there are four layers of encryption used when sending a message), and even the end points ("destinations") are cryptographic identifiers (essentially a pair of public keys). 
+builddeps  :
+    - apache-ant
+    - openjdk-8-devel
+rundeps  :
+    - openjdk-8    
+build      : |
+    export ANT_OPTS="-Dfile.encoding=UTF-8"
+    ant preppkg-linux-only
+install    : |
+    install -dm0755 $installdir/usr/lib/tmpfiles.d
+    install -dm0755 $installdir/usr/bin
+    install -dm0750 $installdir/usr/share/i2p
+    install -dm0644 $installdir/usr/share/man/man1/
+    install -dm0644 $installdir/usr/share/licenses/i2p/
+    cp pkg-temp/blocklist.txt $installdir/usr/share/i2p
+    cp pkg-temp/clients.config $installdir/usr/share/i2p
+    cp pkg-temp/eepget $installdir/usr/share/i2p
+    cp pkg-temp/i2prouter $installdir/usr/share/i2p
+    cp pkg-temp/i2psnark.config $installdir/usr/share/i2p
+    cp pkg-temp/i2ptunnel.config $installdir/usr/share/i2p
+    cp pkg-temp/history.txt $installdir/usr/share/i2p
+    cp pkg-temp/hosts.txt $installdir/usr/share/i2p
+    cp pkg-temp/systray.config $installdir/usr/share/i2p
+    cp pkg-temp/wrapper.config $installdir/usr/share/i2p
+    cp -r pkg-temp/certificates $installdir/usr/share/i2p
+    cp -r pkg-temp/docs $installdir/usr/share/i2p
+    cp -r pkg-temp/eepsite $installdir/usr/share/i2p
+    cp -r pkg-temp/geoip $installdir/usr/share/i2p
+    cp -r pkg-temp/lib $installdir/usr/share/i2p
+    cp -r pkg-temp/locale $installdir/usr/share/i2p
+    cp -r pkg-temp/scripts $installdir/usr/share/i2p
+    cp -r pkg-temp/webapps $installdir/usr/share/i2p
+    cp pkg-temp/man/eepget.1 $installdir/usr/share/man/man1/eepget.1
+    cp pkg-temp/LICENSE.txt $installdir/usr/share/licenses/i2p/LICENSE
+    install -Dm0644 $pkgfiles/router.config $installdir/usr/share/i2p/router.config
+    install -Dm0755 $pkgfiles/i2prouter.sh $installdir/usr/share/i2p/i2prouter
+    install -Dm0644 $pkgfiles/i2prouter.service $installdir/usr/lib/systemd/system/i2prouter.service
+    install -Dm0644 $pkgfiles/i2prouter.conf $installdir/usr/lib/tmpfiles.d/i2prouter.conf
+    ln -s /usr/share/i2p/{eepget,i2prouter} $installdir/usr/bin/
+    chmod +x $installdir/usr/share/i2p/{eepget,i2prouter}
+    sed -i $installdir/usr/share/i2p/eepget \
+        -e 's:%INSTALL_PATH:/usr/share/i2p:g'
+    sed -i $installdir/usr/share/i2p/clients.config \
+        -e "s:clientApp.4.startOnLoad=.*:clientApp.4.startOnLoad=false:"
+    rm -rf $installdir//usr/share/i2p/lib/wrapper/linux/
+    rm -rf $installdir//usr/share/i2p/lib/wrapper/linux-armv5/
+    rm -rf $installdir//usr/share/i2p/lib/wrapper/linux-armv6/
+    rm -rf $installdir//usr/share/i2p/lib/wrapper/linux-ppc/

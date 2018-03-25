@@ -1,0 +1,39 @@
+<PISI>
+    <Source>
+        <Name>i2p</Name>
+        <Packager>
+            <Name>Devil505</Name>
+            <Email>devil505linux@gmail.com</Email>
+        </Packager>
+        <License>GPL-2.0-or-later</License>
+        <PartOf>network.web</PartOf>
+        <Summary xml:lang="en">A distributed anonymous network</Summary>
+        <Description xml:lang="en">I2P is an anonymous network, exposing a simple layer that applications can use to anonymously and securely send messages to each other. The network itself is strictly message based (a la IP), but there is a library available to allow reliable streaming communication on top of it (a la TCP). All communication is end to end encrypted (in total there are four layers of encryption used when sending a message), and even the end points (&quot;destinations&quot;) are cryptographic identifiers (essentially a pair of public keys). 
+</Description>
+        <Archive type="binary" sha1sum="79eb0752a961b8e0d15c77d298c97498fbc89c5a">https://solus-project.com/sources/README.Solus</Archive>
+    </Source>
+    <Package>
+        <Name>i2p</Name>
+        <Summary xml:lang="en">A distributed anonymous network</Summary>
+        <Description xml:lang="en">I2P is an anonymous network, exposing a simple layer that applications can use to anonymously and securely send messages to each other. The network itself is strictly message based (a la IP), but there is a library available to allow reliable streaming communication on top of it (a la TCP). All communication is end to end encrypted (in total there are four layers of encryption used when sending a message), and even the end points (&quot;destinations&quot;) are cryptographic identifiers (essentially a pair of public keys). 
+</Description>
+        <PartOf>network.web</PartOf>
+        <Files>
+            <Path fileType="executable">/usr/bin</Path>
+            <Path fileType="library">/usr/lib/systemd/system/i2prouter.service</Path>
+            <Path fileType="library">/usr/lib/tmpfiles.d/i2prouter.conf</Path>
+            <Path fileType="data">/usr/share/i2p</Path>
+            <Path fileType="data">/usr/share/licenses/i2p/LICENSE</Path>
+            <Path fileType="man">/usr/share/man</Path>
+        </Files>
+    </Package>
+    <History>
+        <Update release="1">
+            <Date>2018-03-25</Date>
+            <Version>0.9.33</Version>
+            <Comment>Packaging update</Comment>
+            <Name>Devil505</Name>
+            <Email>devil505linux@gmail.com</Email>
+        </Update>
+    </History>
+</PISI>
